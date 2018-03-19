@@ -28,6 +28,13 @@ Template.viewfinder.rendered = function() {
       var vendorURL = window.URL || window.webkitURL;
       //video.src = vendorURL.createObjectURL(stream);
       video.srcObject = stream
+      try {
+      video.srcObject = stream;
+    } catch (error) {
+      video.src = URL.createObjectURL(stream);
+    }
+
+
     }
     video.play();
 
@@ -47,17 +54,17 @@ Template.viewfinder.rendered = function() {
     navigator.msGetUserMedia
   );
 
-  if (! navigator.getUserMedia) {
+  if (! (navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) {
     // no browser support, sorry
     failure("BROWSER_NOT_SUPPORTED");
     return;
   }
 
   // initiate request for webcam
-  navigator.getUserMedia({
+  navigator.mediaDevices.getUserMedia({
       video: true,
       audio: false
-  }, success, failure);
+  }).then(success).catch(failure);
 
   // resize viewfinder to a reasonable size, not necessarily photo size
   var viewfinderWidth = 280;
@@ -176,8 +183,11 @@ MeteorCamera.getPicture = function (options, callback) {
   var view;
   
   closeAndCallback = function () {
-    app.popup.close($('.camera-popup'),true)  
+    
     var originalArgs = arguments;
+
+    app.popup.close($('.camera-popup'),true)  
+
     UI.remove(view);
     photo.set(null);
     callback.apply(null, originalArgs);
