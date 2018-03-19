@@ -1,8 +1,11 @@
 Package.describe({
-  name: "snowbreeze:camera",
-  summary: "Photos with one function call on desktop and mobile.",
-  version: "1.0",
-  git: "https://github.com/theavijitsarkar/camera"
+  name: 'snowbreeze:meteor-f7-camera',
+   summary: "Photos with one function call on desktop and mobile.",
+  version: "0.0.1",
+  git: "https://github.com/theavijitsarkar/camera",
+  // By default, Meteor will default to using README.md for documentation.
+  // To avoid submitting documentation, set this field to null.
+  documentation: 'README.md'
 });
 
 Cordova.depends({
