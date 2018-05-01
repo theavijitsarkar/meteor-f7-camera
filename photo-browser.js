@@ -11,7 +11,7 @@ var magnification = 4;    // Magnification factor - more effective than image qu
 
 var quality = 80;
 
-Template.viewfinder.rendered = function() {
+Template.viewfinder.onRendered(function() {
   var template = this;
 
   waitingForPermission.set(true);
@@ -78,7 +78,7 @@ Template.viewfinder.rendered = function() {
       resized = true;
     }
   }, false);
-};
+});
 
 // is the current error a permission denied error?
 var permissionDeniedError = function () {
@@ -104,6 +104,8 @@ Template.camera.helpers({
   browserNotSupportedError: browserNotSupportedError
 });
 
+/*
+
 Template.camera.events({
   "click .use-photo": function () {
     closeAndCallback(null, photo.get());
@@ -127,6 +129,44 @@ Template.camera.events({
     }
   }
 });
+
+*/
+Template.camera.onDestroyed(function(){
+
+  $(".use-photo").off('click')
+  $(".new-photo").off('click')
+  $(".cancel").off('click')
+
+})
+Template.camera.onRendered(function() {
+
+  $(".use-photo").click(function(){
+      closeAndCallback(null, photo.get());
+  })
+
+  $(".new-photo").click(function(){
+       photo.set(null);
+  })
+
+  $(".cancel").click(function(){
+       if (permissionDeniedError()) {
+          closeAndCallback(new Meteor.Error("permissionDenied", "Camera permissions were denied."));
+        } else if (browserNotSupportedError()) {
+          closeAndCallback(new Meteor.Error("browserNotSupported", "This browser isn't supported."));
+        } else if (error.get()) {
+          closeAndCallback(new Meteor.Error("unknownError", "There was an error while accessing the camera."));
+        } else {
+          closeAndCallback(new Meteor.Error("cancel", "Photo taking was cancelled."));
+        }
+        
+        if (stream) {
+             stream.getTracks().forEach(function (track) { track.stop(); });
+        }
+  })
+
+
+
+})
 
 Template.viewfinder.events({
   'click .shutter': function (event, template) {
