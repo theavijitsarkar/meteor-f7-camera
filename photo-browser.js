@@ -104,73 +104,44 @@ Template.camera.helpers({
   browserNotSupportedError: browserNotSupportedError
 });
 
-/*
 
-Template.camera.events({
-  "click .use-photo": function () {
-    closeAndCallback(null, photo.get());
-  },
-  "click .new-photo": function () {
-    photo.set(null);
-  },
-  "click .cancel": function () {
-    if (permissionDeniedError()) {
-      closeAndCallback(new Meteor.Error("permissionDenied", "Camera permissions were denied."));
-    } else if (browserNotSupportedError()) {
-      closeAndCallback(new Meteor.Error("browserNotSupported", "This browser isn't supported."));
-    } else if (error.get()) {
-      closeAndCallback(new Meteor.Error("unknownError", "There was an error while accessing the camera."));
-    } else {
-      closeAndCallback(new Meteor.Error("cancel", "Photo taking was cancelled."));
-    }
-    
-    if (stream) {
-         stream.getTracks().forEach(function (track) { track.stop(); });
-    }
+Template.photoviewer.helpers({
+
+  photo: function () {
+    return photo.get();
   }
-});
-
-*/
-Template.camera.onDestroyed(function(){
-
-  console.log("Camera Destroyed")
-  
-  $(".use-photo").off('click')
-  $(".new-photo").off('click')
-  $(".cancel").off('click')
 
 })
-Template.camera.onRendered(function() {
-  console.log("Camera Rendered")
-  
 
-  $(".use-photo").click(function(){
+  Template.photoviewer.events({
+    "click .use-photo"() {
+      
       closeAndCallback(null, photo.get());
-  })
+    },
+    "click .new-photo"() {
+      
+      photo.set(null);
+    },
+    "click .cancel"() {
+      
+      if (permissionDeniedError()) {
+        closeAndCallback(new Meteor.Error("permissionDenied", "Camera permissions were denied."));
+      } else if (browserNotSupportedError()) {
+        closeAndCallback(new Meteor.Error("browserNotSupported", "This browser isn't supported."));
+      } else if (error.get()) {
+        closeAndCallback(new Meteor.Error("unknownError", "There was an error while accessing the camera."));
+      } else {
+        closeAndCallback(new Meteor.Error("cancel", "Photo taking was cancelled."));
+      }
+      
+      if (stream) {
+           stream.getTracks().forEach(function (track) { track.stop(); });
+      }
+    }
+  });
 
-  $(".new-photo").click(function(){
-       photo.set(null);
-  })
 
-  $(".cancel").click(function(){
-       if (permissionDeniedError()) {
-          closeAndCallback(new Meteor.Error("permissionDenied", "Camera permissions were denied."));
-        } else if (browserNotSupportedError()) {
-          closeAndCallback(new Meteor.Error("browserNotSupported", "This browser isn't supported."));
-        } else if (error.get()) {
-          closeAndCallback(new Meteor.Error("unknownError", "There was an error while accessing the camera."));
-        } else {
-          closeAndCallback(new Meteor.Error("cancel", "Photo taking was cancelled."));
-        }
-        
-        if (stream) {
-             stream.getTracks().forEach(function (track) { track.stop(); });
-        }
-  })
-
-
-
-})
+ 
 
 Template.viewfinder.events({
   'click .shutter': function (event, template) {
