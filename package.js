@@ -1,7 +1,7 @@
 Package.describe({
   name: 'snowbreeze:meteor-f7-camera',
    summary: "Photos with one function call on desktop and mobile. Works only for F7 + Meteor",
-  version: "0.0.6",
+  version: "0.0.7",
   git: "https://github.com/theavijitsarkar/meteor-f7-camera",
   // By default, Meteor will default to using README.md for documentation.
   // To avoid submitting documentation, set this field to null.

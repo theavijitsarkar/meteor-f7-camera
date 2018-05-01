@@ -133,12 +133,16 @@ Template.camera.events({
 */
 Template.camera.onDestroyed(function(){
 
+  console.log("Camera Destroyed")
+  
   $(".use-photo").off('click')
   $(".new-photo").off('click')
   $(".cancel").off('click')
 
 })
 Template.camera.onRendered(function() {
+  console.log("Camera Rendered")
+  
 
   $(".use-photo").click(function(){
       closeAndCallback(null, photo.get());
