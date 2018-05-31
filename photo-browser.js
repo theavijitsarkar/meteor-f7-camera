@@ -124,6 +124,7 @@ Template.photoviewer.helpers({
     },
     "click .cancel"() {
       
+      
       if (permissionDeniedError()) {
         closeAndCallback(new Meteor.Error("permissionDenied", "Camera permissions were denied."));
       } else if (browserNotSupportedError()) {
@@ -155,6 +156,17 @@ Template.viewfinder.events({
     var data = canvas.toDataURL('image/jpeg', quality);
     photo.set(data);
     stream.getTracks().forEach(function (track) { track.stop(); });
+  },
+  'click .cancel' :function (event, template) {
+      
+       
+      closeAndCallback(new Meteor.Error("cancel", "Photo taking was cancelled."));
+      
+      
+      if (stream) {
+           stream.getTracks().forEach(function (track) { track.stop(); });
+      }
+    }
   }
 }); 
 
