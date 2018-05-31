@@ -162,12 +162,11 @@ Template.viewfinder.events({
        
       closeAndCallback(new Meteor.Error("cancel", "Photo taking was cancelled."));
       
-      
       if (stream) {
            stream.getTracks().forEach(function (track) { track.stop(); });
       }
     }
-  }
+  
 }); 
 
 Template.viewfinder.helpers({
