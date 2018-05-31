@@ -1,5 +1,5 @@
 Package.describe({
-  name: 'theavijitsarkar:meteor-f7-camera',
+  name: 'snowbreeze:meteor-f7-camera',
    summary: "Photos with one function call on desktop and mobile. Works only for F7 + Meteor",
   version: "0.1.8",
   git: "https://github.com/theavijitsarkar/meteor-f7-camera",

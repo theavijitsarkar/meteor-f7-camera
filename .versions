@@ -26,7 +26,7 @@ random@1.1.0
 reactive-dict@1.2.0
 reactive-var@1.0.11
 session@1.1.7
-theavijitsarkar:meteor-f7-camera@0.1.8
+snowbreeze:meteor-f7-camera@0.1.8
 templating@1.0.9
 tracker@1.1.3
 ui@1.0.5
